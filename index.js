@@ -23,8 +23,8 @@ app.get("/api/hello", function (req, res) {
 var urls = [];
 app.post("/api/shorturl", function (req, res) {
   const url = req.body.url;
-
-  dns.lookup(url.slice(url.indexOf("://") + 3), (err, address, family) => {
+  const { hostname } = new URL(url);
+  dns.lookup(hostname, (err, address, family) => {
     if (err) {
       console.log(err);
       return res.json({ error: "invalid url" });
